@@ -9,7 +9,8 @@ export class AppService {
 
   public todos: BehaviorSubject<TodoItem[]> = new BehaviorSubject<TodoItem[]>([]);
 
-  public constructor() {}
+  public constructor() {
+  }
 
   private static getFromStorage(): TodoItem[] {
     const data = localStorage.getItem('todos');
@@ -30,6 +31,15 @@ export class AppService {
   }
 
   public addTodo(item: TodoItem): void {
+    const todos = this.todos.getValue();
+    if (todos.length > 0) {
+      const lastItemId = todos[todos.length - 1].id;
+      if (lastItemId !== undefined) {
+        item.id = lastItemId + 1;
+      }
+    } else {
+      item.id = 0;
+    }
     this.todos.next([...this.todos.getValue(), item]);
     this.updateStorage();
   }
@@ -53,9 +63,15 @@ export class AppService {
     const todos = this.todos.getValue();
     const index = todos.findIndex(data => data.id === item.id);
     todos[index] = item;
+    this.updateStorage();
   }
 
   public searchTodos(value: string): void {
+    value = value.trim();
+    if (value === '') {
+      this.getAllTodos();
+      return;
+    }
     const todos = this.todos.getValue();
     const searchedTodos: TodoItem[] = [];
     for (const item of todos) {

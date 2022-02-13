@@ -1,0 +1,32 @@
+.main-content {
+  width: 70vw;
+  margin-left: 15vw;
+  margin-top: 10vh;
+}
+
+.search {
+  width: 100%;
+  font-size: 2rem;
+}
+
+.todo {
+  margin-top: 30px;
+}
+
+.todo-content {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+}
+
+
+.todo-content .todo-actions button {
+  margin-left: 10px;
+}
+
+.todo-content .todo-title {
+  font-size: 1.5rem;
+  flex-grow: 1;
+}
